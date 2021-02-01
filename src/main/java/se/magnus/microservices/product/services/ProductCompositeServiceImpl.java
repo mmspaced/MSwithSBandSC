@@ -11,7 +11,6 @@ import se.magnus.microservices.composite.ServiceAddresses;
 import se.magnus.microservices.product.Product;
 import se.magnus.microservices.recommendation.Recommendation;
 import se.magnus.microservices.review.Review;
-import se.magnus.microservices.util.exceptions.InvalidInputException;
 import se.magnus.microservices.util.exceptions.NotFoundException;
 import se.magnus.microservices.util.http.ServiceUtil;
 

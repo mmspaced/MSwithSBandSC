@@ -42,14 +42,14 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
         RestTemplate restTemplate,
         ObjectMapper mapper,
 
-        @Value("${app.product-service.host}") String productServiceHost,
-        @Value("${app.product-service.port}") int    productServicePort,
+        @Value("${app.server}") String productServiceHost,
+        @Value("${app.server.port}") int    productServicePort,
 
-        @Value("${app.recommendation-service.host}") String recommendationServiceHost,
-        @Value("${app.recommendation-service.port}") int    recommendationServicePort,
+        @Value("${app.server}") String recommendationServiceHost,
+        @Value("${app.server.port}") int    recommendationServicePort,
 
-        @Value("${app.review-service.host}") String reviewServiceHost,
-        @Value("${app.review-service.port}") int    reviewServicePort
+        @Value("${app.server}") String reviewServiceHost,
+        @Value("${app.server.port}") int    reviewServicePort
     ) {
 
         this.restTemplate = restTemplate;
