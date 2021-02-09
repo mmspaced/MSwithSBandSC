@@ -19,7 +19,7 @@ public class ServiceUtil {
 
     @Autowired
     public ServiceUtil(
-        @Value("${server.port}") String port) {
+        @Value("${app.port}") String port) {
 
         this.port = port;
     }

@@ -68,7 +68,7 @@ public class ReviewServiceApplicationTests {
 	@Test
 	public void getReviewsNotFound() {
 
-		int productIdNotFound = 213;
+		int productIdNotFound = 13;
 
 		client.get()
 			.uri("/review?productId=" + productIdNotFound)

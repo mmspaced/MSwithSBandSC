@@ -1,38 +1,18 @@
 package se.magnus.microservices.composite;
 
 public class ServiceAddresses {
-    private final String cmp;
-    private final String pro;
-    private final String rev;
-    private final String rec;
+    private final String productCompositeServiceAddress;
 
     public ServiceAddresses() {
-        cmp = null;
-        pro = null;
-        rev = null;
-        rec = null;
+        productCompositeServiceAddress = null;
     }
 
-    public ServiceAddresses(String compositeAddress, String productAddress, String reviewAddress, String recommendationAddress) {
-        this.cmp = compositeAddress;
-        this.pro = productAddress;
-        this.rev = reviewAddress;
-        this.rec = recommendationAddress;
+    public ServiceAddresses(String productCompositeServiceAddress) {
+        this.productCompositeServiceAddress = productCompositeServiceAddress;
     }
 
-    public String getCmp() {
-        return cmp;
+    public String getProductCompositeServiceAddress() {
+        return productCompositeServiceAddress;
     }
 
-    public String getPro() {
-        return pro;
-    }
-
-    public String getRev() {
-        return rev;
-    }
-
-    public String getRec() {
-        return rec;
-    }
 }

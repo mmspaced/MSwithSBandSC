@@ -62,10 +62,7 @@ public class ProductCompositeServiceImpl implements ProductCompositeService {
                 .collect(Collectors.toList());
 
         // 4. Create info regarding the involved microservices addresses
-        String productAddress = product.getServiceAddress();
-        String reviewAddress = (reviews != null && reviews.size() > 0) ? reviews.get(0).getServiceAddress() : "";
-        String recommendationAddress = (recommendations != null && recommendations.size() > 0) ? recommendations.get(0).getServiceAddress() : "";
-        ServiceAddresses serviceAddresses = new ServiceAddresses(serviceAddress, productAddress, reviewAddress, recommendationAddress);
+        ServiceAddresses serviceAddresses = new ServiceAddresses(serviceAddress);
 
         return new ProductAggregate(productId, name, weight, recommendationSummaries, reviewSummaries, serviceAddresses);
     }

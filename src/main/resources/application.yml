@@ -1,0 +1,51 @@
+---
+app:
+  server: localhost
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    se.magnus: DEBUG
+  
+api:
+  common:
+    version: 1.0.0
+    title: Sample API
+    description: Product Composite API from Microservices with Spring Boot and Spring Cloud
+    termsOfServiceUrl: http://mike-mitnick.com
+    license: Mitnick license
+    licenseUrl: http://mike-mitnick.com
+    contact:
+      name: Albert Michael Mitnick
+      url: http://mike-mitnick.com
+      email: mmitnick.mm@gmailcom
+
+  product-composite:
+    get-composite-product:
+      description: Returns a composite view of the specified product id
+      notes: |
+        # Normal response
+        If the requested product id is found the method will return information regarding:
+        1. Base product information
+        1. Reviews
+        1. Recommendations
+        1. Service Addresses (technical information regarding the addresses of the microservices that created the response)
+
+        # Expected partial and error responses
+        In the following cases, only a partial response be created (used to simplify testing of error conditions)
+
+        ## Product id 113
+        200 - Ok, but no recommendations will be returned
+
+        ## Product id 213
+        200 - Ok, but no reviews will be returned
+
+        ## Non numerical product id
+        400 - A <b>Bad Request</b> error will be returned
+
+        ## Product id 13
+        404 - A <b>Not Found</b> error will be returned
+
+        ## Negative product ids
+        422 - An <b>Unprocessable Entity</b> error will be returned
