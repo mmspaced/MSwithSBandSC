@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.4.2</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>se.magnus.microservices</groupId>
 	<artifactId>microservices</artifactId>
@@ -16,15 +16,24 @@
 
 	<properties>
 		<java.version>11</java.version>
+    	<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 	</properties>
 
 	<dependencies>
 
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.13.1</version>
+     		<groupId>org.junit.jupiter</groupId>
+     		<artifactId>junit-jupiter-api</artifactId>
+   		</dependency>
+		<dependency>
+    		<groupId>org.junit.jupiter</groupId>
+    		<artifactId>junit-jupiter-engine</artifactId>
+    		<scope>test</scope>
 		</dependency>
+   		<dependency>
+     	<groupId>org.springframework</groupId>
+     		<artifactId>spring-test</artifactId>
+   		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -50,7 +59,31 @@
 			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+		<dependency>
+        	<groupId>org.mapstruct</groupId>
+        	<artifactId>mapstruct</artifactId>
+        	<version>${org.mapstruct.version}</version>
+    	</dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>	
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+		<dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+	
+ </dependencies>
 
 	<build>
 		<plugins>
@@ -58,7 +91,23 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+            	<artifactId>maven-compiler-plugin</artifactId>
+            	<version>3.8.1</version>
+            	<configuration>
+                	<source>1.8</source> <!-- depending on your project -->
+                	<target>1.8</target> <!-- depending on your project -->
+                	<annotationProcessorPaths>
+                    	<path>
+                        	<groupId>org.mapstruct</groupId>
+                        	<artifactId>mapstruct-processor</artifactId>
+                        	<version>${org.mapstruct.version}</version>
+                    	</path>
+                    	<!-- other annotation processors -->
+                	</annotationProcessorPaths>
+            	</configuration>
+        	</plugin>
 		</plugins>
 	</build>
-
 </project>
