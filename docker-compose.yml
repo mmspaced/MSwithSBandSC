@@ -1,0 +1,59 @@
+version: '3.5'
+
+services:
+  microservices:
+    # build: microservices/MicroservicesApplication
+    build: ../microservices
+    mem_limit: 350m
+    ports:
+      - "8080:8080"
+    networks: 
+      mydockernet:
+        ipv4_address: "172.16.238.10"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - mongodb
+      - postgres-database
+        # condition: service_healthy
+      # mongodb:
+
+  # MongoDB
+  mongodb:
+    image: mongo:4.4.3
+    mem_limit: 350m
+    ports:
+      - "27017:27017"
+    networks: 
+      mydockernet:
+        ipv4_address: "172.16.238.11"
+    # command: mongod --smallfiles
+
+  # PostgreSQL
+  postgres-database:
+    image: "postgres"
+    mem_limit: 350m
+    ports:
+      - "5432:5432"
+    networks:
+      mydockernet:
+        ipv4_address: "172.16.238.12"
+    environment:
+      # - POSTGRES_USER=user
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=pwd
+      - POSTGRES_DB=review-db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks: 
+  mydockernet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.238.0/24
+

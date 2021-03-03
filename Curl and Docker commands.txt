@@ -1,0 +1,52 @@
+curl http://localhost:8080/product-composite/1
+curl http://localhost:8080/product-composite/2
+
+
+curl http://localhost:8080/product/1
+curl http://localhost:8080/product/2
+
+// HTTP 404 error when executing the following request
+curl http://localhost:8080/review/1
+
+// HTTP 404 error when executing the following request
+curl http://localhost:8080/recommendation/1
+
+unzip -l microservices-0.0.1-SNAPSHOT2.jar
+
+docker rm -f $(docker ps -aq)
+
+echo 'Runtime.getRuntime().availableProcessors()' | docker run --rm -i open
+jdk:12.0.2 jshell -q
+
+docker run -it --rm openjdk:12.0.2 java -XX:+PrintFlagsFinal -version | gre
+p MaxHeapSize
+
+-------------------------------------------------------------------------------
+
+To build the "fat-jar" file (e.g., microservices-1.0.0-SNAPSHOT.jar), the following command needs to be executed where the gradlew batch file and settings.gradle (etc.) are located.  The jar file is located in the build/libs subdirectory under ~/Development/SpringBootCloud/microservices/microservices.  Note and understand that their are two levels of settings.gradle files
+
+./gradlew :microservices:build
+
+Copy the fat-jar file to ~/Development/SpringBootCloud/microservices/microservices directory and then run the following command against it
+
+cp microservices* ../../
+docker build -t microservices .
+
+Validate that the Docker image got built correctly by executing the following command:
+
+docker images | grep microservices
+
+Launch a container with the image using the following command. The -rm option tells Docker to clean up the container once we stop the execution from the terminal. The -p8080:8080 option maps port 8080 in the container to port 8080 in the Docker host, which makes it possible to call it from the outside. In macOS, this makes the port available on localhost.  Note that only one container can be mapped to a specific port in t
+
+docker run --rm -p8080:8080  microservices
+
+// Run the container in the background (-d) and give it a name (--name)
+
+docker run -d -p8080:8080 --name mitnick-microservices microservices
+
+docker logs mitnick-microservices -f --tail 0
+
+docker rm -f mitnick-microservices
+
+
+
