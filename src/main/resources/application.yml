@@ -27,8 +27,6 @@ spring.data:
     port: 27017
     # database: recommendation-db
     # database: product-db
-    # uri: mongodb://localhost:27017/product-db
-    # uri: mongodb://localhost:27017/recommendation-db
 
 # spring.datasource.hikari.initializationFailTimeout: 60000
   
@@ -165,15 +163,12 @@ spring.data:
     host: 172.16.238.11
     port: 27017
     database: product-db
-    # uri: mongodb://172.16.238.11/product-db
 
 # spring.data.mongodb.host: mongodb
 
 spring.datasource:
   # url: jdbc:postgresql://postgresql/review-db
   url: jdbc:postgresql://172.16.238.12/review-db
-  # platform: postgres
   username: postgres
-  # password: pwd
 
 server.port: 8080
