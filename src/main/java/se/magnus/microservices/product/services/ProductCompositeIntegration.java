@@ -58,6 +58,10 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
         productServiceUrl        = "http://" + productServiceHost + ":" + productServicePort + "/product";
         recommendationServiceUrl = "http://" + recommendationServiceHost + ":" + recommendationServicePort + "/recommendation";
         reviewServiceUrl         = "http://" + reviewServiceHost + ":" + reviewServicePort + "/review";
+
+        System.out.println("productServiceUrl =" + productServiceUrl);
+        System.out.println("recommendationServiceUrl =" + recommendationServiceUrl);
+        System.out.println("reviewServiceUrl =" + reviewServiceUrl);
     }
 
     @Override

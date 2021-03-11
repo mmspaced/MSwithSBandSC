@@ -96,6 +96,9 @@ public class MicroservicesApplication {
 		String postgreSqlUri = ctx.getEnvironment().getProperty("spring.datasource.url");
 		LOG.info("Connected to PostgreSQL: " + postgreSqlUri);
 		System.out.println("Connected to PostgreSQL: " + postgreSqlUri);
+
+		String apiNotesfromApplictionYml = ctx.getEnvironment().getProperty("api.product-composite.get-composite-product.notes");
+		System.out.println("FROM Application.yml file annotations: " + apiNotesfromApplictionYml);
 	}
 
 }

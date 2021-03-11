@@ -9,7 +9,6 @@ logging:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
-
 # Strongly recommend to set this property to "none" in a production environment!
 spring.jpa.hibernate.ddl-auto: update
 
@@ -20,7 +19,6 @@ spring.datasource:
   username: postgres
   password: pwd
 
-
 spring.data:
   mongodb:
     host: localhost
@@ -29,7 +27,7 @@ spring.data:
     # database: product-db
 
 # spring.datasource.hikari.initializationFailTimeout: 60000
-  
+
 api:
   common:
     version: 1.0.0
@@ -97,6 +95,35 @@ spring:
     activate:
       on-profile: docker
 
+app:
+  server: localhost
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    se.magnus: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# Strongly recommend to set this property to "none" in a production environment!
+spring.jpa.hibernate.ddl-auto: update
+
+spring.data:
+  mongodb:
+    # host: mongodb
+    host: 172.16.238.11
+    port: 27017
+    database: product-db
+
+# spring.data.mongodb.host: mongodb
+
+spring.datasource:
+  # url: jdbc:postgresql://postgresql/review-db
+  url: jdbc:postgresql://172.16.238.12/review-db
+  username: postgres
+  password: pwd
+
 api:
   common:
     version: 1.0.0
@@ -156,19 +183,3 @@ api:
         Entities for product information, recommendations and reviews related to the specificed productId will be deleted.
         The implementation of the delete method is idempotent, i.e. it can be called several times with the same response.
         This means that a delete request of a non existing product will return <b>200 Ok</b>.
-
-spring.data:
-  mongodb:
-    # host: mongodb
-    host: 172.16.238.11
-    port: 27017
-    database: product-db
-
-# spring.data.mongodb.host: mongodb
-
-spring.datasource:
-  # url: jdbc:postgresql://postgresql/review-db
-  url: jdbc:postgresql://172.16.238.12/review-db
-  username: postgres
-
-server.port: 8080
