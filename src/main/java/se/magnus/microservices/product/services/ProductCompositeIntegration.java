@@ -51,9 +51,10 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
         this.restTemplate = restTemplate;
         this.mapper = mapper;
 
-        // Here is where I set the timeout for reads to 2 seconds.
+        // Here is where I commented out the timeout for reads to 1 msec.
 
-        ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setReadTimeout(5000);
+        // ((SimpleClientHttpRequestFactory)
+        // restTemplate.getRequestFactory()).setReadTimeout(1);
 
         productServiceUrl = "http://" + productServiceHost + ":" + productServicePort + "/product";
         recommendationServiceUrl = "http://" + recommendationServiceHost + ":" + recommendationServicePort
