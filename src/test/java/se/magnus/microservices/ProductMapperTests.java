@@ -34,7 +34,5 @@ public class ProductMapperTests {
         assertEquals(api.getName(),      api2.getName());
         assertEquals(api.getWeight(),    api2.getWeight());
         assertNull(api2.getServiceAddress());
-
-        System.out.println("Exiting ProductMapperTests...");
     }
 }

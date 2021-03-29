@@ -39,13 +39,6 @@ public class RecommendationMapperTests {
         assertEquals(api.getRate(), api2.getRate());
         assertEquals(api.getContent(), api2.getContent());
         assertNull(api2.getServiceAddress());
-
-        System.out.println("api =" + api.getAuthor());
-        System.out.println("entity = " + entity.getAuthor());
-        System.out.println("api2 = " + api2.getAuthor());
-
-        System.out.println("Exiting RecommendationMapperTests...");
-
     }
 
     @Test
@@ -78,7 +71,5 @@ public class RecommendationMapperTests {
         assertEquals(api.getRate(), api2.getRate());
         assertEquals(api.getContent(), api2.getContent());
         assertNull(api2.getServiceAddress());
-
-        System.out.println("Exiting RecommendationMapperListTests...");
     }
 }

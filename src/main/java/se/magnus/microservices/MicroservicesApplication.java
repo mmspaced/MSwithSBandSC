@@ -57,29 +57,19 @@ public class MicroservicesApplication {
 	@Bean
 	public Docket apiDocumentation() {
 
-		return new Docket(DocumentationType.SWAGGER_2)
-			.select()
-			// .apis(RequestHandlerSelectors.basePackage("se.magnus.microservices.composite"))
-			.apis(RequestHandlerSelectors.any())
-			.paths(PathSelectors.any())
-			.build()
-			.apiInfo(apiInfo());
+		return new Docket(DocumentationType.SWAGGER_2).select()
+				// .apis(RequestHandlerSelectors.basePackage("se.magnus.microservices.composite"))
+				.apis(RequestHandlerSelectors.any()).paths(PathSelectors.any()).build().apiInfo(apiInfo());
 
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfo(
-            apiTitle,
-            apiDescription,
-			apiVersion,
-			apiTermsOfServiceUrl,
-			new Contact(apiContactName, apiContactUrl, apiContactEmail),
-			apiLicense,
-			apiLicenseUrl,
-			Collections.emptyList());
-	
+		return new ApiInfo(apiTitle, apiDescription, apiVersion, apiTermsOfServiceUrl,
+				new Contact(apiContactName, apiContactUrl, apiContactEmail), apiLicense, apiLicenseUrl,
+				Collections.emptyList());
+
 	}
-	
+
 	@Bean
 	RestTemplate restTemplate() {
 		return new RestTemplate();
@@ -91,14 +81,9 @@ public class MicroservicesApplication {
 		String mongoDbHost = ctx.getEnvironment().getProperty("spring.data.mongodb.host");
 		String mongoDbPort = ctx.getEnvironment().getProperty("spring.data.mongodb.port");
 		LOG.info("Connected to MongoDb: " + mongoDbHost + ":" + mongoDbPort);
-		System.out.println("Connected to MongoDb: " + mongoDbHost + ":" + mongoDbPort);
 
 		String postgreSqlUri = ctx.getEnvironment().getProperty("spring.datasource.url");
 		LOG.info("Connected to PostgreSQL: " + postgreSqlUri);
-		System.out.println("Connected to PostgreSQL: " + postgreSqlUri);
-
-		String apiNotesfromApplictionYml = ctx.getEnvironment().getProperty("api.product-composite.get-composite-product.notes");
-		System.out.println("FROM Application.yml file annotations: " + apiNotesfromApplictionYml);
 	}
 
 }

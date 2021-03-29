@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -38,30 +39,26 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
     private final String reviewServiceUrl;
 
     @Autowired
-    public ProductCompositeIntegration(
-        RestTemplate restTemplate,
-        ObjectMapper mapper,
+    public ProductCompositeIntegration(RestTemplate restTemplate, ObjectMapper mapper,
 
-        @Value("${app.server}") String productServiceHost,
-        @Value("${app.port}") int productServicePort,
+            @Value("${app.server}") String productServiceHost, @Value("${app.port}") int productServicePort,
 
-        @Value("${app.server}") String recommendationServiceHost,
-        @Value("${app.port}") int recommendationServicePort,
+            @Value("${app.server}") String recommendationServiceHost,
+            @Value("${app.port}") int recommendationServicePort,
 
-        @Value("${app.server}") String reviewServiceHost,
-        @Value("${app.port}") int reviewServicePort
-    ) {
+            @Value("${app.server}") String reviewServiceHost, @Value("${app.port}") int reviewServicePort) {
 
         this.restTemplate = restTemplate;
         this.mapper = mapper;
 
-        productServiceUrl        = "http://" + productServiceHost + ":" + productServicePort + "/product";
-        recommendationServiceUrl = "http://" + recommendationServiceHost + ":" + recommendationServicePort + "/recommendation";
-        reviewServiceUrl         = "http://" + reviewServiceHost + ":" + reviewServicePort + "/review";
+        // Here is where I set the timeout for reads to 2 seconds.
 
-        System.out.println("productServiceUrl =" + productServiceUrl);
-        System.out.println("recommendationServiceUrl =" + recommendationServiceUrl);
-        System.out.println("reviewServiceUrl =" + reviewServiceUrl);
+        ((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setReadTimeout(5000);
+
+        productServiceUrl = "http://" + productServiceHost + ":" + productServicePort + "/product";
+        recommendationServiceUrl = "http://" + recommendationServiceHost + ":" + recommendationServicePort
+                + "/recommendation";
+        reviewServiceUrl = "http://" + reviewServiceHost + ":" + reviewServicePort + "/review";
     }
 
     @Override
@@ -86,8 +83,6 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
 
         try {
             String url = productServiceUrl + "/" + productId;
-            LOG.debug("Will call the getProduct API on URL: {}", url);
-            System.out.println("getProduct url =" + url);
 
             Product product = restTemplate.getForObject(url, Product.class);
             LOG.debug("Found a product with id: {}", product.getProductId());
@@ -96,21 +91,21 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
 
         } catch (HttpClientErrorException ex) {
 
-            // switch (ex.getStatusCode()) {
+            switch (ex.getStatusCode()) {
 
-            // case NOT_FOUND:
-            //     throw new NotFoundException(getErrorMessage(ex));
+            case NOT_FOUND:
+                throw new NotFoundException(getErrorMessage(ex));
 
-            // case UNPROCESSABLE_ENTITY :
-            //     throw new InvalidInputException(getErrorMessage(ex));
+            case UNPROCESSABLE_ENTITY:
+                throw new InvalidInputException(getErrorMessage(ex));
 
-            // default:
-            //     LOG.warn("Got a unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
-            //     LOG.warn("Error body: {}", ex.getResponseBodyAsString());
-            //     throw ex;
-            // }
-            throw handleHttpClientException(ex);
-    
+            default:
+                LOG.warn("Got a unexpected HTTP error: {}, will rethrow it", ex.getStatusCode());
+                LOG.warn("Error body: {}", ex.getResponseBodyAsString());
+                throw ex;
+            }
+            // throw handleHttpClientException(ex);
+
         }
     }
 
@@ -147,19 +142,19 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
     @Override
     public List<Recommendation> getRecommendations(int productId) {
 
-        try {    
+        try {
             String url = recommendationServiceUrl + "?productId=" + productId;
-   
+
             LOG.debug("Will call getRecommendations API on URL: {}", url);
-            System.out.println("getRecommendation url =" + url);
-            List<Recommendation> recommendations = restTemplate.exchange(url, GET, null, new ParameterizedTypeReference<List<Recommendation>>() {}).getBody();
+            List<Recommendation> recommendations = restTemplate
+                    .exchange(url, GET, null, new ParameterizedTypeReference<List<Recommendation>>() {
+                    }).getBody();
 
             LOG.debug("Found {} recommendations for a product with id: {}", recommendations.size(), productId);
-            System.out.println("Found {} recommendations for a product with id: {}" + recommendations.size() + productId);
             return recommendations;
-        }
-        catch (Exception e) {
-            LOG.warn("Got an exception while requesting recommendations, return zero recommendations: {}", e.getMessage());
+        } catch (Exception e) {
+            LOG.warn("Got an exception while requesting recommendations, return zero recommendations: {}",
+                    e.getMessage());
             return new ArrayList<>();
         }
     }
@@ -194,21 +189,19 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
         }
     }
 
-
     @Override
     public List<Review> getReviews(int productId) {
 
         try {
             String url = reviewServiceUrl + "?productId=" + productId;
 
-
             LOG.debug("Will call getReviews API on URL: {}", url);
-            System.out.println("getReviews url =" + url);
 
-            List<Review> reviews = restTemplate.exchange(url, GET, null, new ParameterizedTypeReference<List<Review>>() {}).getBody();
+            List<Review> reviews = restTemplate
+                    .exchange(url, GET, null, new ParameterizedTypeReference<List<Review>>() {
+                    }).getBody();
 
             LOG.debug("Found {} reviews for a product with id: {}", reviews.size(), productId);
-            System.out.println("Found {} reviews for a product with id: {}" + reviews.size() + productId);
             return reviews;
 
         } catch (Exception ex) {
@@ -236,7 +229,7 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
         case NOT_FOUND:
             return new NotFoundException(getErrorMessage(ex));
 
-        case UNPROCESSABLE_ENTITY :
+        case UNPROCESSABLE_ENTITY:
             return new InvalidInputException(getErrorMessage(ex));
 
         default:
@@ -253,6 +246,5 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
             return ex.getMessage();
         }
     }
-
 
 }

@@ -45,19 +45,19 @@ public class ProductServiceApplicationTests {
             .jsonPath("$.productId").isEqualTo(productId);
 	}
 
-	@Test
-	public void duplicateError() {
+	// @Test
+	// public void duplicateError() {
 
-		int productId = 1;
+	// 	int productId = 1;
 
-		postAndVerifyProduct(productId, OK);
+	// 	postAndVerifyProduct(productId, OK);
 
-		assertTrue(repository.findByProductId(productId).isPresent());
+	// 	assertTrue(repository.findByProductId(productId).isPresent());
 
-		postAndVerifyProduct(productId, UNPROCESSABLE_ENTITY)
-			.jsonPath("$.path").isEqualTo("/product")
-			.jsonPath("$.message").isEqualTo("Duplicate key, Product Id: " + productId);
-	}
+	// 	postAndVerifyProduct(productId, UNPROCESSABLE_ENTITY)
+	// 		.jsonPath("$.path").isEqualTo("/product")
+	// 		.jsonPath("$.message").isEqualTo("Duplicate key, Product Id: " + productId);
+	// }
 
 	@Test
 	public void deleteProduct() {

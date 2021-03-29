@@ -16,7 +16,6 @@ public class ReviewMapperTests {
 
     private ReviewMapper mapper = Mappers.getMapper(ReviewMapper.class);
 
-
     @Test
     public void mapperTests() {
 
@@ -40,8 +39,6 @@ public class ReviewMapperTests {
         assertEquals(api.getSubject(), api2.getSubject());
         assertEquals(api.getContent(), api2.getContent());
         assertNull(api2.getServiceAddress());
-
-        System.out.println("Exiting ReviewMapperTests...");
     }
 
     @Test
@@ -74,7 +71,5 @@ public class ReviewMapperTests {
         assertEquals(api.getSubject(), api2.getSubject());
         assertEquals(api.getContent(), api2.getContent());
         assertNull(api2.getServiceAddress());
-
-        System.out.println("Exiting ReviewMapperListTests...");
     }
 }
