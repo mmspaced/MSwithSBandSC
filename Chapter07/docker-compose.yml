@@ -1,4 +1,4 @@
-version: '2.1'
+version: "2.1"
 
 services:
   product:
@@ -127,7 +127,7 @@ services:
       - MYSQL_USER=user
       - MYSQL_PASSWORD=pwd
     healthcheck:
-      test: "/usr/bin/mysql --user=user --password=pwd --execute \"SHOW DATABASES;\""
+      test: '/usr/bin/mysql --user=user --password=pwd --execute "SHOW DATABASES;"'
       interval: 10s
       timeout: 5s
       retries: 10
@@ -151,3 +151,9 @@ services:
       - "2181:2181"
     environment:
       - KAFKA_ADVERTISED_HOST_NAME=zookeeper
+
+  eureka:
+    build: eureka-server
+    mem_limit: 350m
+    ports:
+      - "8761:8761"

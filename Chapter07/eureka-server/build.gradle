@@ -1,0 +1,44 @@
+buildscript {
+	ext {
+		// springBootVersion = '2.4.4'
+    springBootVersion = '2.3.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'se.magnus'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+ext {
+  javaLanguageLevel = '1.8'
+	springCloudVersion = 'Hoxton.SR6'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+  // implementation group: 'org.springframework.cloud', name: 'spring-cloud-netflix-eureka-server', version: '3.0.3'
+  implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
+	implementation 'org.glassfish.jaxb:jaxb-runtime'
+  
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}

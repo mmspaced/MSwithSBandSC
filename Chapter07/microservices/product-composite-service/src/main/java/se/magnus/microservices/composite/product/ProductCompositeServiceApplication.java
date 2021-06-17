@@ -5,8 +5,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.health.*;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.reactive.function.client.WebClient;
+
 import se.magnus.microservices.composite.product.services.ProductCompositeIntegration;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -68,8 +71,16 @@ public class ProductCompositeServiceApplication {
 	@Autowired
 	ProductCompositeIntegration integration;
 
+<<<<<<< HEAD
 	@Bean
 	ReactiveHealthIndicator coreServices() {
+=======
+  // @Autowired
+  // HealthAggregator healthAggregator;
+
+  @Autowired
+  ProductCompositeIntegration integration;
+>>>>>>> Various updates for Chapter 9 to support Eureka
 
 		ReactiveHealthIndicatorRegistry registry = new DefaultReactiveHealthIndicatorRegistry(new LinkedHashMap<>());
 
@@ -80,7 +91,21 @@ public class ProductCompositeServiceApplication {
 		return new CompositeReactiveHealthIndicator(healthAggregator, registry);
 	}
 
+<<<<<<< HEAD
 	public static void main(String[] args) {
 		SpringApplication.run(ProductCompositeServiceApplication.class, args);
 	}
 }
+=======
+  @Bean
+  @LoadBalanced
+  public WebClient.Builder loadBalancedWebClientBuilder() {
+    final WebClient.Builder builder = WebClient.builder();
+    return builder;
+  }
+
+  public static void main(String[] args) {
+    SpringApplication.run(ProductCompositeServiceApplication.class, args);
+  }
+}
+>>>>>>> Various updates for Chapter 9 to support Eureka

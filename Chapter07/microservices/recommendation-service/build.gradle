@@ -1,6 +1,12 @@
 buildscript {
 	ext {
+<<<<<<< HEAD
 		springBootVersion = '2.3.2.RELEASE'
+=======
+		// springBootVersion = '2.4.4'
+    springBootVersion = '2.3.2.RELEASE'
+
+>>>>>>> Various updates for Chapter 9 to support Eureka
 	}
 	repositories {
 		mavenCentral()
@@ -36,6 +42,8 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
 	implementation('org.springframework.cloud:spring-cloud-starter-stream-rabbit')
 	implementation('org.springframework.cloud:spring-cloud-starter-stream-kafka')
+  implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+
 	implementation("org.mapstruct:mapstruct:${mapstructVersion}")
 
 	compileOnly "org.mapstruct:mapstruct-processor:${mapstructVersion}"

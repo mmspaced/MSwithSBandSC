@@ -1,6 +1,12 @@
 buildscript {
 	ext {
+<<<<<<< HEAD
 		springBootVersion = '2.3.2.RELEASE'
+=======
+		// springBootVersion = '2.4.4'
+    springBootVersion = '2.3.2.RELEASE'
+
+>>>>>>> Various updates for Chapter 9 to support Eureka
 	}
 	repositories {
 		mavenCentral()
@@ -34,7 +40,9 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-webflux')
 	implementation('org.springframework.cloud:spring-cloud-starter-stream-rabbit')
 	implementation('org.springframework.cloud:spring-cloud-starter-stream-kafka')
+  implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
 	implementation('io.springfox:springfox-boot-starter:3.0.0')
+  
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	testImplementation('org.springframework.cloud:spring-cloud-stream-test-support')
 	testImplementation('io.projectreactor:reactor-test')
