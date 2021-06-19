@@ -2,13 +2,10 @@ package se.magnus.microservices.core.product;
 
 import org.junit.Test;
 import org.mapstruct.factory.Mappers;
-<<<<<<< HEAD
-=======
 // import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.context.annotation.Bean;
 // import org.springframework.stereotype.Component;
 
->>>>>>> Various updates for Chapter 9 to support Eureka
 import se.magnus.api.core.product.Product;
 import se.magnus.microservices.core.product.persistence.ProductEntity;
 import se.magnus.microservices.core.product.services.ProductMapper;

@@ -1,12 +1,8 @@
 buildscript {
 	ext {
-<<<<<<< HEAD
-		springBootVersion = '2.3.2.RELEASE'
-=======
 		// springBootVersion = '2.4.4'
     springBootVersion = '2.3.2.RELEASE'
 
->>>>>>> Various updates for Chapter 9 to support Eureka
 	}
 	repositories {
 		mavenCentral()
@@ -43,14 +39,10 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
 	implementation('org.springframework.cloud:spring-cloud-starter-stream-rabbit')
 	implementation('org.springframework.cloud:spring-cloud-starter-stream-kafka')
-<<<<<<< HEAD
-	implementation("org.mapstruct:mapstruct:${mapstructVersion}")
-=======
   implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
 
-  implementation("org.mapstruct:mapstruct:${mapstructVersion}")
+	implementation("org.mapstruct:mapstruct:${mapstructVersion}")
   // implementation 'org.mapstruct:mapstruct-jdk8:1.3.1.Final'
->>>>>>> Various updates for Chapter 9 to support Eureka
 
 	compileOnly "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
