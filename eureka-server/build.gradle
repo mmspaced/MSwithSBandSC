@@ -30,7 +30,6 @@ repositories {
 }
 
 dependencies {
-  // implementation group: 'org.springframework.cloud', name: 'spring-cloud-netflix-eureka-server', version: '3.0.3'
   implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
 	implementation 'org.glassfish.jaxb:jaxb-runtime'
   

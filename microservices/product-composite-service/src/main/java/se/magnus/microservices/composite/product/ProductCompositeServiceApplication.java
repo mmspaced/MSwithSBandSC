@@ -61,26 +61,26 @@ public class ProductCompositeServiceApplication {
 
   }
 
-  @Autowired
-  ProductCompositeIntegration integration;
+  // @Autowired
+  // ProductCompositeIntegration integration;
 
-  @Bean
-  ReactiveHealthContributor coreServices() {
-    final Map<String, ReactiveHealthIndicator> registry = new LinkedHashMap<>();
+  // @Bean
+  // ReactiveHealthContributor coreServices() {
+  //   final Map<String, ReactiveHealthIndicator> registry = new LinkedHashMap<>();
 
-    registry.put("product", () -> integration.getProductHealth());
-    registry.put("recommendation", () -> integration.getRecommendationHealth());
-    registry.put("review", () -> integration.getReviewHealth());
+  //   registry.put("product", () -> integration.getProductHealth());
+  //   registry.put("recommendation", () -> integration.getRecommendationHealth());
+  //   registry.put("review", () -> integration.getReviewHealth());
 
-    return CompositeReactiveHealthContributor.fromMap(registry);
-  }
+  //   return CompositeReactiveHealthContributor.fromMap(registry);
+  // }
 
-  @Bean
-  @LoadBalanced
-  public WebClient.Builder loadBalancedWebClientBuilder() {
-    final WebClient.Builder builder = WebClient.builder();
-    return builder;
-  }
+  // @Bean
+  // @LoadBalanced
+  // public WebClient.Builder loadBalancedWebClientBuilder() {
+  //   final WebClient.Builder builder = WebClient.builder();
+  //   return builder;
+  // }
 
   public static void main(String[] args) {
     SpringApplication.run(ProductCompositeServiceApplication.class, args);

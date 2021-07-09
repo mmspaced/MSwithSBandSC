@@ -89,10 +89,13 @@ spring.rabbitmq:
   username: guest
   password: guest
 
+app.eureka-server: localhost
+
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      # defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://${app.eureka-server}:8761/eureka/
     initialInstanceInfoReplicationIntervalSeconds: 5
     registryFetchIntervalSeconds: 5
   instance:
@@ -130,4 +133,5 @@ spring.rabbitmq.host: rabbitmq
 
 spring.cloud.stream.kafka.binder.brokers: kafka
 
-eureka.client.serviceUrl.defaultZone: http://eureka:8761/eureka/
+# eureka.client.serviceUrl.defaultZone: http://eureka:8761/eureka/
+app.eureka-server: eureka

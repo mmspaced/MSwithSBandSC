@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.actuate.health.Health;
+// import org.springframework.boot.actuate.health.Health;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
@@ -38,9 +38,9 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
 
     private static final Logger LOG = LoggerFactory.getLogger(ProductCompositeIntegration.class);
 
-    private static final String productServiceUrl = "http://product";
-    private static final String recommendationServiceUrl = "http://recommendation";
-    private static final String reviewServiceUrl = "http://review";
+    private static final String productServiceUrl = "http://product:8080";
+    private static final String recommendationServiceUrl = "http://recommendation:8080";
+    private static final String reviewServiceUrl = "http://review:8080";
 
     private final WebClient.Builder webClientBuilder;
     private final ObjectMapper mapper;
@@ -106,7 +106,10 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
     @Override
     public Mono<Product> getProduct(int productId) {
         String url = productServiceUrl + "/product/" + productId;
+
+        LOG.debug("#############################################");
         LOG.debug("Will call the getProduct API on URL: {}", url);
+        LOG.debug("#############################################");
 
         // The following was the previous return statement, before the Eureka changes
         // return webClient.get().uri(url).retrieve().bodyToMono(Product.class).log().onErrorMap(WebClientResponseException.class, ex -> handleException(ex));
@@ -175,25 +178,25 @@ public class ProductCompositeIntegration implements ProductService, Recommendati
         messageSources.outputReviews().send(MessageBuilder.withPayload(new Event(DELETE, productId, null)).build());
     }
 
-    public Mono<Health> getProductHealth() {
-        return getHealth(productServiceUrl);
-    }
+    // public Mono<Health> getProductHealth() {
+    //     return getHealth(productServiceUrl);
+    // }
 
-    public Mono<Health> getRecommendationHealth() {
-        return getHealth(recommendationServiceUrl);
-    }
+    // public Mono<Health> getRecommendationHealth() {
+    //     return getHealth(recommendationServiceUrl);
+    // }
 
-    public Mono<Health> getReviewHealth() {
-        return getHealth(reviewServiceUrl);
-    }
+    // public Mono<Health> getReviewHealth() {
+    //     return getHealth(reviewServiceUrl);
+    // }
 
-    private Mono<Health> getHealth(String url) {
-      url += "/actuator/health";
-      LOG.debug("Will call the Health API on URL: {}", url);
-      return getWebClient().get().uri(url).retrieve().bodyToMono(String.class)
-          .map(s -> new Health.Builder().up().build())
-          .onErrorResume(ex -> Mono.just(new Health.Builder().down(ex).build())).log();
-    }
+    // private Mono<Health> getHealth(String url) {
+    //   url += "/actuator/health";
+    //   LOG.debug("Will call the Health API on URL: {}", url);
+    //   return getWebClient().get().uri(url).retrieve().bodyToMono(String.class)
+    //       .map(s -> new Health.Builder().up().build())
+    //       .onErrorResume(ex -> Mono.just(new Health.Builder().down(ex).build())).log();
+    // }
 
     private WebClient getWebClient() {
       if (webClient == null) {
