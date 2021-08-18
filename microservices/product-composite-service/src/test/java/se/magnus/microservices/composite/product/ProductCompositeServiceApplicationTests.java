@@ -25,15 +25,18 @@ import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment=RANDOM_PORT)
+@SpringBootTest(webEnvironment=RANDOM_PORT, 
+    classes = { ProductCompositeServiceApplication.class, TestSecurityConfig.class }, 
+    properties = {"spring.main.allow-bean-definition-overriding=true", "eureka.client.enabled=false" })
+
 public class ProductCompositeServiceApplicationTests {
 
 	private static final int PRODUCT_ID_OK = 1;
 	private static final int PRODUCT_ID_NOT_FOUND = 2;
 	private static final int PRODUCT_ID_INVALID = 3;
 
-    @Autowired
-    private WebTestClient client;
+  @Autowired
+  private WebTestClient client;
 
 	@MockBean
 	private ProductCompositeIntegration compositeIntegration;

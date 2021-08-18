@@ -36,6 +36,7 @@ public class HealthCheckConfiguration {
 
         final Map<String, ReactiveHealthIndicator> registry = new LinkedHashMap<>();
 
+        registry.put("auth-server",       () -> getHealth("http://auth-server"));
         registry.put("product",           () -> getHealth("http://product"));
         registry.put("recommendation",    () -> getHealth("http://recommendation"));
         registry.put("review",            () -> getHealth("http://review"));
