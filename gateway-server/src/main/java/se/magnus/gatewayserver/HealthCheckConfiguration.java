@@ -42,6 +42,8 @@ public class HealthCheckConfiguration {
         registry.put("review",            () -> getHealth("http://review"));
         registry.put("product-composite", () -> getHealth("http://product-composite"));
 
+        // System.out.println("The health check results from product-composite are: " + getHealth("http://product-composite").toString());
+
         return CompositeReactiveHealthContributor.fromMap(registry);          
    	}
 
