@@ -87,8 +87,11 @@ spring.cloud.gateway.routes:
   filters:
   - SetPath=/501
 
-spring.security.oauth2.resourceserver.jwt.jwk-set-uri: http://${app.auth-server}:9999/.well-known/jwks.json
-# spring.security.oauth2.resourceserver.jwt.issuer-uri: https://dev-qmpygyfn.us.auth0.com/
+# For local authorization server
+# spring.security.oauth2.resourceserver.jwt.jwk-set-uri: http://${app.auth-server}:9999/.well-known/jwks.json  
+
+# For Auth0 authorization server
+spring.security.oauth2.resourceserver.jwt.issuer-uri: https://dev-qmpygyfn.us.auth0.com/
 
 management.endpoint.health.show-details: "ALWAYS"
 management.endpoints.web.exposure.include: "*"
