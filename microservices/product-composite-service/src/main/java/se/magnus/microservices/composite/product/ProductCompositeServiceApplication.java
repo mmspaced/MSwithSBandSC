@@ -75,12 +75,12 @@ public class ProductCompositeServiceApplication {
   //   return CompositeReactiveHealthContributor.fromMap(registry);
   // }
 
-  // @Bean
-  // @LoadBalanced
-  // public WebClient.Builder loadBalancedWebClientBuilder() {
-  //   final WebClient.Builder builder = WebClient.builder();
-  //   return builder;
-  // }
+  @Bean
+  @LoadBalanced
+  public WebClient.Builder loadBalancedWebClientBuilder() {
+    final WebClient.Builder builder = WebClient.builder();
+    return builder;
+  }
 
   public static void main(String[] args) {
     SpringApplication.run(ProductCompositeServiceApplication.class, args);

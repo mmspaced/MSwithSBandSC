@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @SpringBootApplication
-public class GatewayserverApplication {
+public class GatewayServerApplication {
 
   @Bean
   @LoadBalanced
@@ -17,7 +17,7 @@ public class GatewayserverApplication {
   }
 
 	public static void main(String[] args) {
-		SpringApplication.run(GatewayserverApplication.class, args);
+		SpringApplication.run(GatewayServerApplication.class, args);
 	}
 
 }

@@ -3,14 +3,18 @@ version: "2.1"
 services:
   product:
     build: microservices/product-service
+    networks:
+      - my-network
     mem_limit: 350m
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - MANAGEMENT_HEALTH_RABBIT_ENABLED=false
-      - SPRING_CLOUD_STREAM_DEFAULTBINDER=kafka
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_PARTITIONED=true
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCECOUNT=2
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCEINDEX=0
+      - SPRING_PROFILES_ACTIVE=docker,streaming_partitioned,streaming_instance_0,kafka
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
+      # - MANAGEMENT_HEALTH_RABBIT_ENABLED=false
+      # - SPRING_CLOUD_STREAM_DEFAULTBINDER=kafka
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_PARTITIONED=true
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCECOUNT=2
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCEINDEX=0
     depends_on:
       - kafka
       - mongodb
@@ -18,13 +22,17 @@ services:
   product-p1:
     build: microservices/product-service
     mem_limit: 350m
+    networks:
+      - my-network
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - MANAGEMENT_HEALTH_RABBIT_ENABLED=false
-      - SPRING_CLOUD_STREAM_DEFAULTBINDER=kafka
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_PARTITIONED=true
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCECOUNT=2
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCEINDEX=1
+      - SPRING_PROFILES_ACTIVE=docker,streaming_partitioned,streaming_instance_1,kafka
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
+      # - MANAGEMENT_HEALTH_RABBIT_ENABLED=false
+      # - SPRING_CLOUD_STREAM_DEFAULTBINDER=kafka
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_PARTITIONED=true
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCECOUNT=2
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCEINDEX=1
     depends_on:
       - kafka
       - mongodb
@@ -32,13 +40,17 @@ services:
   recommendation:
     build: microservices/recommendation-service
     mem_limit: 350m
+    networks:
+      - my-network
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - MANAGEMENT_HEALTH_RABBIT_ENABLED=false
-      - SPRING_CLOUD_STREAM_DEFAULTBINDER=kafka
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_PARTITIONED=true
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCECOUNT=2
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCEINDEX=0
+      - SPRING_PROFILES_ACTIVE=docker,streaming_partitioned,streaming_instance_0,kafka
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
+      # - MANAGEMENT_HEALTH_RABBIT_ENABLED=false
+      # - SPRING_CLOUD_STREAM_DEFAULTBINDER=kafka
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_PARTITIONED=true
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCECOUNT=2
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCEINDEX=0
     depends_on:
       - kafka
       - mongodb
@@ -46,13 +58,17 @@ services:
   recommendation-p1:
     build: microservices/recommendation-service
     mem_limit: 350m
+    networks:
+      - my-network
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - MANAGEMENT_HEALTH_RABBIT_ENABLED=false
-      - SPRING_CLOUD_STREAM_DEFAULTBINDER=kafka
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_PARTITIONED=true
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCECOUNT=2
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCEINDEX=1
+      - SPRING_PROFILES_ACTIVE=docker,streaming_partitioned,streaming_instance_1,kafka
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
+      # - MANAGEMENT_HEALTH_RABBIT_ENABLED=false
+      # - SPRING_CLOUD_STREAM_DEFAULTBINDER=kafka
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_PARTITIONED=true
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCECOUNT=2
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCEINDEX=1
     depends_on:
       - kafka
       - mongodb
@@ -60,13 +76,17 @@ services:
   review:
     build: microservices/review-service
     mem_limit: 350m
+    networks:
+      - my-network
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - MANAGEMENT_HEALTH_RABBIT_ENABLED=false
-      - SPRING_CLOUD_STREAM_DEFAULTBINDER=kafka
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_PARTITIONED=true
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCECOUNT=2
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCEINDEX=0
+      - SPRING_PROFILES_ACTIVE=docker,streaming_partitioned,streaming_instance_0,kafka
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
+      # - MANAGEMENT_HEALTH_RABBIT_ENABLED=false
+      # - SPRING_CLOUD_STREAM_DEFAULTBINDER=kafka
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_PARTITIONED=true
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCECOUNT=2
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCEINDEX=0
     depends_on:
       mysql:
         condition: service_healthy
@@ -76,13 +96,17 @@ services:
   review-p1:
     build: microservices/review-service
     mem_limit: 350m
+    networks:
+      - my-network
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - MANAGEMENT_HEALTH_RABBIT_ENABLED=false
-      - SPRING_CLOUD_STREAM_DEFAULTBINDER=kafka
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_PARTITIONED=true
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCECOUNT=2
-      - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCEINDEX=1
+      - SPRING_PROFILES_ACTIVE=docker,streaming_partitioned,streaming_instance_1,kafka
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
+      # - MANAGEMENT_HEALTH_RABBIT_ENABLED=false
+      # - SPRING_CLOUD_STREAM_DEFAULTBINDER=kafka
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_PARTITIONED=true
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCECOUNT=2
+      # - SPRING_CLOUD_STREAM_BINDINGS_INPUT_CONSUMER_INSTANCEINDEX=1
     depends_on:
       mysql:
         condition: service_healthy
@@ -92,33 +116,46 @@ services:
   product-composite:
     build: microservices/product-composite-service
     mem_limit: 350m
+    networks:
+      - my-network
     # ports:
     #   - "8080:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - MANAGEMENT_HEALTH_RABBIT_ENABLED=false
-      - SPRING_CLOUD_STREAM_DEFAULTBINDER=kafka
-      - SPRING_CLOUD_STREAM_BINDINGS_OUTPUT-PRODUCTS_PRODUCER_PARTITION-KEY-EXPRESSION=payload.key
-      - SPRING_CLOUD_STREAM_BINDINGS_OUTPUT-PRODUCTS_PRODUCER_PARTITION-COUNT=2
-      - SPRING_CLOUD_STREAM_BINDINGS_OUTPUT-RECOMMENDATIONS_PRODUCER_PARTITION-KEY-EXPRESSION=payload.key
-      - SPRING_CLOUD_STREAM_BINDINGS_OUTPUT-RECOMMENDATIONS_PRODUCER_PARTITION-COUNT=2
-      - SPRING_CLOUD_STREAM_BINDINGS_OUTPUT-REVIEWS_PRODUCER_PARTITION-KEY-EXPRESSION=payload.key
-      - SPRING_CLOUD_STREAM_BINDINGS_OUTPUT-REVIEWS_PRODUCER_PARTITION-COUNT=2
+      - SPRING_PROFILES_ACTIVE=docker,streaming_partitioned,kafka
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
+      # - MANAGEMENT_HEALTH_RABBIT_ENABLED=false
+      # - SPRING_CLOUD_STREAM_DEFAULTBINDER=kafka
+      # - SPRING_CLOUD_STREAM_BINDINGS_OUTPUT-PRODUCTS_PRODUCER_PARTITION-KEY-EXPRESSION=payload.key
+      # - SPRING_CLOUD_STREAM_BINDINGS_OUTPUT-PRODUCTS_PRODUCER_PARTITION-COUNT=2
+      # - SPRING_CLOUD_STREAM_BINDINGS_OUTPUT-RECOMMENDATIONS_PRODUCER_PARTITION-KEY-EXPRESSION=payload.key
+      # - SPRING_CLOUD_STREAM_BINDINGS_OUTPUT-RECOMMENDATIONS_PRODUCER_PARTITION-COUNT=2
+      # - SPRING_CLOUD_STREAM_BINDINGS_OUTPUT-REVIEWS_PRODUCER_PARTITION-KEY-EXPRESSION=payload.key
+      # - SPRING_CLOUD_STREAM_BINDINGS_OUTPUT-REVIEWS_PRODUCER_PARTITION-COUNT=2
     depends_on:
       - kafka
-
-  # $ mongo
+      # $ mongo
+  
   mongodb:
     image: mongo:3.6.9
     mem_limit: 350m
+    networks:
+      - my-network
     ports:
       - "27017:27017"
     command: mongod --smallfiles
+    healthcheck:
+      test: "mongo --eval 'db.stats().ok'"
+      interval: 20s
+      timeout: 5s
+      retries: 10
 
   # $ mysql -uroot -h127.0.0.1 -p
   mysql:
     image: mysql:5.7
     mem_limit: 350m
+    networks:
+      - my-network
     ports:
       - "3306:3306"
     environment:
@@ -128,13 +165,15 @@ services:
       - MYSQL_PASSWORD=pwd
     healthcheck:
       test: '/usr/bin/mysql --user=user --password=pwd --execute "SHOW DATABASES;"'
-      interval: 10s
+      interval: 20s
       timeout: 5s
       retries: 10
 
   kafka:
     image: wurstmeister/kafka:2.12-2.1.0
     mem_limit: 350m
+    networks:
+      - my-network
     ports:
       - "9092:9092"
     environment:
@@ -147,27 +186,60 @@ services:
   zookeeper:
     image: wurstmeister/zookeeper:3.4.6
     mem_limit: 350m
+    networks:
+      - my-network
     ports:
       - "2181:2181"
     environment:
       - KAFKA_ADVERTISED_HOST_NAME=zookeeper
 
   eureka:
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
     build: eureka-server
     mem_limit: 350m
+    networks:
+      - my-network
     # ports:
-      # - "8761:8761"
+    # - "8761:8761"
 
   gateway:
-    environment: 
+    environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
     build: gateway-server
     mem_limit: 350m
-    ports: 
+    networks:
+      - my-network
+    ports:
       - "8443:8443"
 
   auth-server:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
+      - CONFIG_SERVER_PWD=${CONFIG_SERVER_PWD}
     build: authorization-server
     mem_limit: 350m
+    networks:
+      - my-network
+
+  config-server:
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker, native
+      - ENCRYPT_KEY=${CONFIG_SERVER_ENCRYPT_KEY}
+      - SPRING_SECURITY_USER_NAME=${CONFIG_SERVER_USR}
+      - SPRING_SECURITY_USER_PASSWORD=${CONFIG_SERVER_PWD}
+    volumes:
+      - $PWD/config-repo:/config-repo
+    build: config-server
+    mem_limit: 350m
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    name: my-network
