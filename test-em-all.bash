@@ -261,7 +261,7 @@ waitForService curl -k https://$HOST:$PORT/actuator/health
 ACCESS_TOKEN=$(curl -k https://writer:secret@$HOST:$PORT/oauth/token -d grant_type=password -d username=magnus -d password=password -s | jq .access_token -r) 
 AUTH="-H \"Authorization: Bearer $ACCESS_TOKEN\""
 
-# echo "Bearer writer ACCESS_TOKEN with read and write scopes = ${ACCESS_TOKEN}"
+echo "Bearer writer ACCESS_TOKEN with read and write scopes = ${ACCESS_TOKEN}"
 
 # Auth0 authorization server.  Disabled because it didn't seem to work with HTTP basic auth. retrieval of config data using APIs
 
