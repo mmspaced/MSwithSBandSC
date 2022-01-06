@@ -34,7 +34,7 @@ dependencies {
   implementation('org.springframework.boot:spring-boot-starter-security')
 
   implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
-  implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+  // implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
   implementation 'org.springframework.cloud:spring-cloud-starter-config:2.2.3.RELEASE'
   implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
 	implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'

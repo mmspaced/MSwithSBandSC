@@ -14,9 +14,17 @@ public class SecurityConfig {
 
   @Bean
   SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) throws Exception {
-    http.csrf().disable().authorizeExchange().pathMatchers("/headerrouting/**").permitAll().pathMatchers("/actuator/**")
-        .permitAll().pathMatchers("/eureka/**").permitAll().pathMatchers("/oauth/**").permitAll().anyExchange()
-        .authenticated().and().oauth2ResourceServer().jwt();
+    http
+      .csrf().disable()
+      .authorizeExchange()
+          .pathMatchers("/headerrouting/**").permitAll()
+          .pathMatchers("/actuator/**").permitAll()
+          // .pathMatchers("/eureka/**").permitAll()
+          .pathMatchers("/oauth/**").permitAll()
+          .pathMatchers("/config/**").permitAll()
+          .anyExchange().authenticated()
+      .and().oauth2ResourceServer()
+          .jwt();
     return http.build();
   }
 

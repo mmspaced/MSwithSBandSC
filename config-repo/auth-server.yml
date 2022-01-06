@@ -22,7 +22,9 @@ server.port: 9999
 
 # security.oauth2.authorizationserver.jwt.enabled: false
 
-# ---
-# spring.profiles: docker
+---
+spring.profiles: docker
+
+server.port: 80
 
 # app.eureka-server: eureka

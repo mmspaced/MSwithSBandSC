@@ -181,7 +181,8 @@ function testCircuitBreaker() {
     EXEC="docker run --rm -it --network=my-network alpine"
 
     # First, use the health - endpoint to verify that the circuit breaker is closed
-    assertEqual "CLOSED" "$($EXEC wget product-composite:8080/actuator/health -qO - | jq -r .components.circuitBreakers.details.product.details.state)"
+    # assertEqual "CLOSED" "$($EXEC wget product-composite:8080/actuator/health -qO - | jq -r .components.circuitBreakers.details.product.details.state)"
+    assertEqual "CLOSED" "$($EXEC wget product-composite:80/actuator/health -qO - | jq -r .components.circuitBreakers.details.product.details.state)"
 
     # Open the circuit breaker by running three slow calls in a row, i.e. that cause a timeout exception
     # Also, verify that we get 500 back and a timeout related error message
@@ -193,7 +194,8 @@ function testCircuitBreaker() {
     done
 
     # Verify that the circuit breaker is now open
-    assertEqual "OPEN" "$($EXEC wget product-composite:8080/actuator/health -qO - | jq -r .components.circuitBreakers.details.product.details.state)"
+    # assertEqual "OPEN" "$($EXEC wget product-composite:8080/actuator/health -qO - | jq -r .components.circuitBreakers.details.product.details.state)"
+    assertEqual "OPEN" "$($EXEC wget product-composite:80/actuator/health -qO - | jq -r .components.circuitBreakers.details.product.details.state)"
 
     # Verify that the circuit breaker is now open by running the slow call again, verify it gets 200 back, i.e. fail fast works, and a response from the fallback method.
     assertCurl 200 "curl -k https://$HOST:$PORT/product-composite/$PROD_ID_REVS_RECS?delay=3 $AUTH -s"
@@ -204,7 +206,8 @@ function testCircuitBreaker() {
     assertEqual "Fallback product2" "$(echo "$RESPONSE" | jq -r .name)"
 
     # Verify that the circuit breaker is still open
-    assertEqual "OPEN" "$($EXEC wget product-composite:8080/actuator/health -qO - | jq -r .components.circuitBreakers.details.product.details.state)"
+    # assertEqual "OPEN" "$($EXEC wget product-composite:8080/actuator/health -qO - | jq -r .components.circuitBreakers.details.product.details.state)"
+    assertEqual "OPEN" "$($EXEC wget product-composite:80/actuator/health -qO - | jq -r .components.circuitBreakers.details.product.details.state)"
 
     # Verify that a 404 (Not Found) error is returned for a non existing productId ($PROD_ID_NOT_FOUND) from the fallback method.
     assertCurl 404 "curl -k https://$HOST:$PORT/product-composite/$PROD_ID_NOT_FOUND $AUTH -s"
@@ -215,7 +218,8 @@ function testCircuitBreaker() {
     sleep 10
 
     # Verify that the circuit breaker is in half open state
-    assertEqual "HALF_OPEN" "$($EXEC wget product-composite:8080/actuator/health -qO - | jq -r .components.circuitBreakers.details.product.details.state)"
+    # assertEqual "HALF_OPEN" "$($EXEC wget product-composite:8080/actuator/health -qO - | jq -r .components.circuitBreakers.details.product.details.state)"
+    assertEqual "HALF_OPEN" "$($EXEC wget product-composite:80/actuator/health -qO - | jq -r .components.circuitBreakers.details.product.details.state)"
 
     # Close the circuit breaker by running three normal calls in a row
     # Also, verify that we get 200 back and a response based on information in the product database
@@ -226,12 +230,18 @@ function testCircuitBreaker() {
     done
 
     # Verify that the circuit breaker is in closed state again
-    assertEqual "CLOSED" "$($EXEC wget product-composite:8080/actuator/health -qO - | jq -r .components.circuitBreakers.details.product.details.state)"
+    # assertEqual "CLOSED" "$($EXEC wget product-composite:8080/actuator/health -qO - | jq -r .components.circuitBreakers.details.product.details.state)"
+    assertEqual "CLOSED" "$($EXEC wget product-composite:80/actuator/health -qO - | jq -r .components.circuitBreakers.details.product.details.state)"
 
     # Verify that the expected state transitions happened in the circuit breaker
-    assertEqual "CLOSED_TO_OPEN"      "$($EXEC wget product-composite:8080/actuator/circuitbreakerevents/product/STATE_TRANSITION -qO - | jq -r .circuitBreakerEvents[-3].stateTransition)"
-    assertEqual "OPEN_TO_HALF_OPEN"   "$($EXEC wget product-composite:8080/actuator/circuitbreakerevents/product/STATE_TRANSITION -qO - | jq -r .circuitBreakerEvents[-2].stateTransition)"
-    assertEqual "HALF_OPEN_TO_CLOSED" "$($EXEC wget product-composite:8080/actuator/circuitbreakerevents/product/STATE_TRANSITION -qO - | jq -r .circuitBreakerEvents[-1].stateTransition)"
+    # assertEqual "CLOSED_TO_OPEN"      "$($EXEC wget product-composite:8080/actuator/circuitbreakerevents/product/STATE_TRANSITION -qO - | jq -r .circuitBreakerEvents[-3].stateTransition)"
+    # assertEqual "OPEN_TO_HALF_OPEN"   "$($EXEC wget product-composite:8080/actuator/circuitbreakerevents/product/STATE_TRANSITION -qO - | jq -r .circuitBreakerEvents[-2].stateTransition)"
+    # assertEqual "HALF_OPEN_TO_CLOSED" "$($EXEC wget product-composite:8080/actuator/circuitbreakerevents/product/STATE_TRANSITION -qO - | jq -r .circuitBreakerEvents[-1].stateTransition)"
+
+    assertEqual "CLOSED_TO_OPEN"      "$($EXEC wget product-composite:80/actuator/circuitbreakerevents/product/STATE_TRANSITION -qO - | jq -r .circuitBreakerEvents[-3].stateTransition)"
+    assertEqual "OPEN_TO_HALF_OPEN"   "$($EXEC wget product-composite:80/actuator/circuitbreakerevents/product/STATE_TRANSITION -qO - | jq -r .circuitBreakerEvents[-2].stateTransition)"
+    assertEqual "HALF_OPEN_TO_CLOSED" "$($EXEC wget product-composite:80/actuator/circuitbreakerevents/product/STATE_TRANSITION -qO - | jq -r .circuitBreakerEvents[-1].stateTransition)"
+
 }
 
 

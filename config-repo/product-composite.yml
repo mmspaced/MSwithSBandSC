@@ -98,7 +98,9 @@ spring.cloud.stream:
 # app.eureka-server: localhost
 
 # For local authorization server
-spring.security.oauth2.resourceserver.jwt.jwk-set-uri: http://${app.auth-server}:9999/.well-known/jwks.json  
+# spring.security.oauth2.resourceserver.jwt.jwk-set-uri: http://${app.auth-server}:9999/.well-known/jwks.json
+spring.security.oauth2.resourceserver.jwt.jwk-set-uri: http://${app.auth-server}/.well-known/jwks.json
+
 
 # For Auth0 authorization server.   
 # spring.security.oauth2.resourceserver.jwt.issuer-uri: https://dev-qmpygyfn.us.auth0.com/
@@ -140,9 +142,9 @@ resilience4j.circuitbreaker:
 #     leaseRenewalIntervalInSeconds: 5
 #     leaseExpirationDurationInSeconds: 5
 
-ribbon.ServerListRefreshInterval: 5000
+# ribbon.ServerListRefreshInterval: 5000
 
-ribbon.NFLoadBalancerPingInterval: 5
+# ribbon.NFLoadBalancerPingInterval: 5
 
 logging:
   level:
@@ -155,7 +157,8 @@ logging:
 ---
 spring.profiles: docker
 
-server.port: 8080
+# server.port: 8080
+server.port: 80
 
 # app:
 #   product-service:
