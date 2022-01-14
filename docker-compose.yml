@@ -3,9 +3,10 @@ version: "2.1"
 services:
   product:
     build: microservices/product-service
+    image: hands-on/product-service
+    mem_limit: 350m
     networks:
       - my-network
-    mem_limit: 350m
     environment:
       - SPRING_PROFILES_ACTIVE=docker,streaming_partitioned,streaming_instance_0,kafka
       - CONFIG_SERVER_USR=${CONFIG_SERVER_USR}
@@ -21,6 +22,7 @@ services:
 
   product-p1:
     build: microservices/product-service
+    image: hands-on/product-service
     mem_limit: 350m
     networks:
       - my-network
@@ -39,6 +41,7 @@ services:
 
   recommendation:
     build: microservices/recommendation-service
+    image: hands-on/recommendation-service
     mem_limit: 350m
     networks:
       - my-network
@@ -57,6 +60,7 @@ services:
 
   recommendation-p1:
     build: microservices/recommendation-service
+    image: hands-on/recommendation-service
     mem_limit: 350m
     networks:
       - my-network
@@ -75,6 +79,7 @@ services:
 
   review:
     build: microservices/review-service
+    image: hands-on/review-service
     mem_limit: 350m
     networks:
       - my-network
@@ -95,6 +100,7 @@ services:
 
   review-p1:
     build: microservices/review-service
+    image: hands-on/review-service
     mem_limit: 350m
     networks:
       - my-network
@@ -115,6 +121,7 @@ services:
 
   product-composite:
     build: microservices/product-composite-service
+    image: hands-on/product-composite-service
     mem_limit: 350m
     networks:
       - my-network
@@ -207,6 +214,7 @@ services:
 
   gateway:
     build: gateway-server
+    image: hands-on/gateway
     mem_limit: 350m
     networks:
       - my-network
@@ -219,6 +227,7 @@ services:
 
   auth-server:
     build: authorization-server
+    image: hands-on/auth-server
     mem_limit: 350m
     networks:
       - my-network
@@ -229,6 +238,7 @@ services:
 
   config-server:
     build: config-server
+    image: hands-on/config-server
     mem_limit: 350m
     networks:
       - my-network
