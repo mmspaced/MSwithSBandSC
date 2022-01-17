@@ -27,26 +27,26 @@ spec:
         resources:
           limits:
             memory: 350Mi
-        livenessProbe:
-          httpGet:
-            scheme: HTTP
-            path: /actuator/info
-            port: 80
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          timeoutSeconds: 2
-          failureThreshold: 20
-          successThreshold: 1
-        readinessProbe:
-          httpGet:
-            scheme: HTTP
-            path: /actuator/health
-            port: 80
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          timeoutSeconds: 2
-          failureThreshold: 3
-          successThreshold: 1
+        # livenessProbe:
+        #   httpGet:
+        #     scheme: HTTP
+        #     path: /actuator/info
+        #     port: 80
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 10
+        #   timeoutSeconds: 2
+        #   failureThreshold: 20
+        #   successThreshold: 1
+        # readinessProbe:
+        #   httpGet:
+        #     scheme: HTTP
+        #     path: /actuator/health
+        #     port: 80
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 10
+        #   timeoutSeconds: 2
+        #   failureThreshold: 3
+        #   successThreshold: 1
 ---
 apiVersion: v1
 kind: Service

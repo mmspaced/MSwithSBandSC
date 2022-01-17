@@ -27,26 +27,26 @@ spec:
         resources:
           limits:
             memory: 350Mi
-        livenessProbe:
-          httpGet:
-            scheme: HTTPS
-            path: /actuator/info
-            port: 8443
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          timeoutSeconds: 2
-          failureThreshold: 20
-          successThreshold: 1
-        readinessProbe:
-          httpGet:
-            scheme: HTTPS
-            path: /actuator/info
-            port: 8443
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          timeoutSeconds: 2
-          failureThreshold: 3
-          successThreshold: 1
+        # livenessProbe:
+        #   httpGet:
+        #     scheme: HTTPS
+        #     path: /actuator/info
+        #     port: 8443
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 10
+        #   timeoutSeconds: 2
+        #   failureThreshold: 20
+        #   successThreshold: 1
+        # readinessProbe:
+        #   httpGet:
+        #     scheme: HTTPS
+        #     path: /actuator/info
+        #     port: 8443
+        #   initialDelaySeconds: 10
+        #   periodSeconds: 10
+        #   timeoutSeconds: 2
+        #   failureThreshold: 3
+        #   successThreshold: 1
 ---
 
 apiVersion: v1

@@ -14,6 +14,7 @@
 : ${PROD_ID_NOT_FOUND=13}
 : ${PROD_ID_NO_RECS=114}
 : ${PROD_ID_NO_REVS=214}
+: ${NAMESPACE=hands-on}
 
 function assertCurl() {
 
@@ -178,7 +179,26 @@ function testCircuitBreaker() {
 
     echo "Start Circuit Breaker tests!"
 
-    EXEC="docker run --rm -it --network=my-network alpine"
+    # EXEC="docker run --rm -it --network=my-network alpine"
+    # Assume we are using Docker Compose if we are running on localhost, otherwise Kubernetes 
+    
+    if [ "$HOST" = 'localhost' ]
+    then
+        echo "Executing within Docker..."
+        EXEC="docker run --rm -it --network=my-network alpine"
+    else
+        echo "Executing within Kubernetes..."
+        echo "Restarting alpine-client..."
+        local ns=$NAMESPACE
+        if kubectl -n $ns get pod alpine-client > /dev/null ; then
+            kubectl -n $ns delete pod alpine-client --grace-period=1
+        fi
+        kubectl -n $ns run --restart=Never alpine-client --image=alpine --command -- sleep 600
+        echo "Waiting for alpine-client to be ready..."
+        kubectl -n $ns wait --for=condition=Ready pod/alpine-client
+
+        EXEC="kubectl -n $ns exec alpine-client --"
+    fi
 
     # First, use the health - endpoint to verify that the circuit breaker is closed
     # assertEqual "CLOSED" "$($EXEC wget product-composite:8080/actuator/health -qO - | jq -r .components.circuitBreakers.details.product.details.state)"
@@ -242,6 +262,12 @@ function testCircuitBreaker() {
     assertEqual "OPEN_TO_HALF_OPEN"   "$($EXEC wget product-composite:80/actuator/circuitbreakerevents/product/STATE_TRANSITION -qO - | jq -r .circuitBreakerEvents[-2].stateTransition)"
     assertEqual "HALF_OPEN_TO_CLOSED" "$($EXEC wget product-composite:80/actuator/circuitbreakerevents/product/STATE_TRANSITION -qO - | jq -r .circuitBreakerEvents[-1].stateTransition)"
 
+    # Shutdown the client pod if we are using Kubernetes, i.e. not runnig on localhost. 
+        if [ "$HOST" != "localhost" ]
+        then
+            kubectl -n $ns delete pod alpine-client --grace-period=1
+        fi
+
 }
 
 
@@ -259,6 +285,8 @@ then
     docker-compose down --remove-orphans
     echo "$ docker-compose up -d"
     docker-compose up -d
+    # echo "Sleeping for 520 seconds to allow all containers to start and complete initialization..."
+    # sleep 520
 fi
 
 waitForService curl -k https://$HOST:$PORT/actuator/health
@@ -271,7 +299,7 @@ waitForService curl -k https://$HOST:$PORT/actuator/health
 ACCESS_TOKEN=$(curl -k https://writer:secret@$HOST:$PORT/oauth/token -d grant_type=password -d username=magnus -d password=password -s | jq .access_token -r) 
 AUTH="-H \"Authorization: Bearer $ACCESS_TOKEN\""
 
-echo "Bearer writer ACCESS_TOKEN with read and write scopes = ${ACCESS_TOKEN}"
+# echo "Bearer writer ACCESS_TOKEN with read and write scopes = ${ACCESS_TOKEN}"
 
 # Auth0 authorization server.  Disabled because it didn't seem to work with HTTP basic auth. retrieval of config data using APIs
 
@@ -331,8 +359,8 @@ assertEqual "\"Type mismatch.\"" "$(echo $RESPONSE | jq .message)"
 assertCurl 401 "curl -k https://$HOST:$PORT/product-composite/$PROD_ID_REVS_RECS -s"
 
 # Old code for retrieving read-only access token from local authorization server
-# READER_ACCESS_TOKEN=$(curl -k https://reader:secret@$HOST:$PORT/oauth/token -d grant_type=password -d username=magnus -d password=password -s | jq .access_token -r)
-# READER_AUTH="-H \"Authorization: Bearer $READER_ACCESS_TOKEN\""
+READER_ACCESS_TOKEN=$(curl -k https://reader:secret@$HOST:$PORT/oauth/token -d grant_type=password -d username=magnus -d password=password -s | jq .access_token -r)
+READER_AUTH="-H \"Authorization: Bearer $READER_ACCESS_TOKEN\""
 
 # echo "Bearer reader ACCESS_TOKEN with only read scope = ${READER_ACCESS_TOKEN}"
 
@@ -341,10 +369,10 @@ assertCurl 401 "curl -k https://$HOST:$PORT/product-composite/$PROD_ID_REVS_RECS
 # Commented out this test because I didn't want to create a read-only JWT in Auth0
 
 # Verify that a normal read request works with token with read scope, expect three recommendations and three reviews
-# assertCurl 200 "curl -k https://$HOST:$PORT/product-composite/$PROD_ID_REVS_RECS $READER_AUTH -s"
-# assertEqual "$PROD_ID_REVS_RECS" $(echo $RESPONSE | jq .productId)
-# assertEqual 3 $(echo $RESPONSE | jq ".recommendations | length")
-# assertEqual 3 $(echo $RESPONSE | jq ".reviews | length")
+assertCurl 200 "curl -k https://$HOST:$PORT/product-composite/$PROD_ID_REVS_RECS $READER_AUTH -s"
+assertEqual "$PROD_ID_REVS_RECS" $(echo $RESPONSE | jq .productId)
+assertEqual 3 $(echo $RESPONSE | jq ".recommendations | length")
+assertEqual 3 $(echo $RESPONSE | jq ".reviews | length")
 
 # For some unknown reason, this didn't work; curl returned a 200 OK code
 # Verify that the reader - client with only read scope - fails on 403 Forbidden (i.e., not authorized) when calling the delete API
