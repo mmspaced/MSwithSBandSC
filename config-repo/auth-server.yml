@@ -29,6 +29,14 @@ server.port: 80
 
 # app.eureka-server: eureka
 
+---
+spring.profiles: kafka
+
+management.health.rabbit.enabled: false
+spring.cloud.stream.defaultBinder: kafka
+spring.kafka.bootstrap-servers: kafka:9092
+
+
 # ---
 # spring.profiles: prod
 

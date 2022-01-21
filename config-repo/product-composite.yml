@@ -196,11 +196,12 @@ spring.cloud.stream.bindings.output-reviews.producer:
   partition-key-expression: payload.key
   partition-count: 2
   
-# ---
-# spring.profiles: kafka
+---
+spring.profiles: kafka
 
-# management.health.rabbit.enabled: false
-# spring.cloud.stream.defaultBinder: kafka
+management.health.rabbit.enabled: false
+spring.cloud.stream.defaultBinder: kafka
+spring.kafka.bootstrap-servers: kafka:9092
 
 # ---
 # spring.profiles: prod

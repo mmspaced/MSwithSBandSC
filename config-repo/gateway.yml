@@ -122,6 +122,11 @@ spring.profiles: docker
 
 app.config-server: config-server
 
+---
+spring.profiles: kafka
+
+management.health.rabbit.enabled: false
+
 # app:
 #   eureka-server: eureka
 #   auth-server: auth-server
