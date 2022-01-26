@@ -19,12 +19,6 @@ spec:
         env:
           - name: SPRING_PROFILES_ACTIVE
             value: "docker,native"
-          # - name: ENCRYPT_KEY
-          #   value: "my-very-secure-encrypt-key"
-          # - name: SPRING_SECURITY_USER_NAME
-          #   value: "dev-usr"
-          # - name: SPRING_SECURITY_USER_PASSWORD
-          #   value: "dev-pwd"
         envFrom:
           - secretRef:
               name: config-server-secrets
@@ -35,6 +29,7 @@ spec:
             memory: 350Mi
         # livenessProbe:
         #   httpGet:
+        #     host:
         #     scheme: HTTP
         #     path: /actuator/info
         #     port: 8888
@@ -45,6 +40,7 @@ spec:
         #   successThreshold: 1
         # readinessProbe:
         #   httpGet:
+        #     host:
         #     scheme: HTTP
         #     path: /actuator/health
         #     port: 8888

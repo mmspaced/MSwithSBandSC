@@ -19,10 +19,6 @@ spec:
         env:
           - name: SPRING_PROFILES_ACTIVE
             value: "docker"
-          # - name: CONFIG_SERVER_USR
-          #   value: "dev-usr"
-          # - name: CONFIG_SERVER_PWD
-          #   value: "dev-pwd"
         envFrom:
           - secretRef:
               name: config-client-credentials
@@ -33,6 +29,7 @@ spec:
             memory: 350Mi
         # livenessProbe:
         #   httpGet:
+        #     host:
         #     scheme: HTTP
         #     path: /actuator/info
         #     port: 80
@@ -43,6 +40,7 @@ spec:
         #   successThreshold: 1
         # readinessProbe:
         #   httpGet:
+        #     host:
         #     scheme: HTTP
         #     path: /actuator/health
         #     port: 80

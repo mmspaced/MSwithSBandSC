@@ -289,6 +289,13 @@ then
     # sleep 520
 fi
 
+if [ "$HOST" != 'localhost' ]
+then
+    echo "Waiting for Minikube deployments to be up and running..."
+    kubectl wait --timeout=600s --for=condition=ready pod --all
+fi
+
+# Wait for all heath checks to complete successfully
 waitForService curl -k https://$HOST:$PORT/actuator/health
 
 # Local authorization server
