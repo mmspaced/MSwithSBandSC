@@ -29,10 +29,9 @@ spec:
             memory: 350Mi
         # livenessProbe:
         #   httpGet:
-        #     host:
         #     scheme: HTTP
-        #     path: /actuator/info
         #     port: 8888
+        #     path: /actuator/info
         #   initialDelaySeconds: 10
         #   periodSeconds: 10
         #   timeoutSeconds: 2
@@ -40,10 +39,9 @@ spec:
         #   successThreshold: 1
         # readinessProbe:
         #   httpGet:
-        #     host:
         #     scheme: HTTP
-        #     path: /actuator/health
         #     port: 8888
+        #     path: /actuator/health
         #   initialDelaySeconds: 10
         #   periodSeconds: 10
         #   timeoutSeconds: 2
