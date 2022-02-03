@@ -28,7 +28,10 @@ import static se.magnus.api.event.Event.Type.DELETE;
 // @SpringBootTest(webEnvironment=RANDOM_PORT, properties = {"spring.data.mongodb.port: 0", 
 //     "eureka.client.enabled=false", "spring.cloud.config.enabled=false", "server.error.include-message=always"})
 @SpringBootTest(webEnvironment=RANDOM_PORT, properties = {"spring.data.mongodb.port: 0", 
-    "spring.cloud.config.enabled=false", "server.error.include-message=always"})
+    // "spring.cloud.config.enabled=false", "server.error.include-message=always"})
+    "server.error.include-message=always"})
+
+    
 public class ProductServiceApplicationTests {
 
     @Autowired

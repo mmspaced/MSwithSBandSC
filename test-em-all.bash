@@ -270,7 +270,9 @@ function testCircuitBreaker() {
 
 }
 
-
+# --------------------------------------------------------------------------------------------------
+# ****************************************** Start of script ***************************************
+# --------------------------------------------------------------------------------------------------
 set -e
 
 echo "Start Tests:" `date`
@@ -303,7 +305,7 @@ waitForService curl -k https://$HOST:$PORT/actuator/health
 
 # Re-enabled local authorization server token retrieval because Auth0 didn't seem to work for accessing the config server API
 # to retrieve config data through HTTP basic authentication in the header (pg. 357)
-ACCESS_TOKEN=$(curl -k https://writer:secret@$HOST:$PORT/oauth/token -d grant_type=password -d username=magnus -d password=password -s | jq .access_token -r) 
+ACCESS_TOKEN=$(curl -k https://writer:secret@$HOST:$PORT/oauth/token -d grant_type=password -d username=magnus -d password=password -s | jq .access_token -r)
 AUTH="-H \"Authorization: Bearer $ACCESS_TOKEN\""
 
 # echo "Bearer writer ACCESS_TOKEN with read and write scopes = ${ACCESS_TOKEN}"

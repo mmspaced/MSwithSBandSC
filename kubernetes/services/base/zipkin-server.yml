@@ -22,6 +22,9 @@ spec:
           #   value: kafka:9092
           - name: RABBIT_ADDRESSES
             value: rabbitmq
+        envFrom:
+        - secretRef:
+            name: rabbitmq-zipkin-credentials
         ports:
         - containerPort: 9411
         resources:

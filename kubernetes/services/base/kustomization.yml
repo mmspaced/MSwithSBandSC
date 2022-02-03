@@ -1,9 +1,11 @@
 resources:
 - auth-server.yml
-- config-server.yml
-- gateway.yml
+# - config-server.yml
+# - gateway.yml
 - product-composite.yml
 - product.yml
 - recommendation.yml
 - review.yml
 - zipkin-server.yml
+# - nginx-ingress-controller.yml
+- ingress-edge-server.yml

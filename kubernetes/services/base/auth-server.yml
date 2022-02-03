@@ -19,9 +19,12 @@ spec:
         env:
           - name: SPRING_PROFILES_ACTIVE
             value: "docker"
+          - name: SPRING_CONFIG_LOCATION
+            value: file:/config-repo/application.yml,file:/config-repo/auth-server.yml
         envFrom:
           - secretRef:
-              name: config-client-credentials
+              # name: config-client-credentials
+              name: rabbitmq-credentials
         ports:
         - containerPort: 80
         resources:
@@ -49,6 +52,13 @@ spec:
           # timeoutSeconds: 2
           # failureThreshold: 3
           # successThreshold: 1
+        volumeMounts:
+        - name: config-repo-volume
+          mountPath: /config-repo
+      volumes:
+      - name: config-repo-volume
+        configMap:
+          name: config-repo-auth-server
 ---
 apiVersion: v1
 kind: Service

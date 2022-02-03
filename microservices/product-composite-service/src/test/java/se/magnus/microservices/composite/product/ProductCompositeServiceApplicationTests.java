@@ -31,8 +31,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
     classes = { ProductCompositeServiceApplication.class, TestSecurityConfig.class }, 
     // properties = {"spring.main.allow-bean-definition-overriding=true", "eureka.client.enabled=false", 
     //     "spring.cloud.config.enabled=false"})
-    properties = {"spring.main.allow-bean-definition-overriding=true", 
-        "spring.cloud.config.enabled=false"})
+    // properties = {"spring.main.allow-bean-definition-overriding=true", 
+    //     "spring.cloud.config.enabled=false"})
+    properties = {"spring.main.allow-bean-definition-overriding=true"})
+
 
 public class ProductCompositeServiceApplicationTests {
 
