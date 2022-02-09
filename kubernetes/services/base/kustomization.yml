@@ -7,5 +7,13 @@ resources:
 - recommendation.yml
 - review.yml
 - zipkin-server.yml
-# - nginx-ingress-controller.yml
-- ingress-edge-server.yml
+
+# ingress-edge-server.yml should only be included for the self-signed
+# certificate, tls-certificate, not for the automated ngrok Let's Encrypt
+# certificates
+# - ingress-edge-server.yml
+
+# ingress-edge-server-ngrok.yml should be included for the automated 
+# downloading of staging and prod certificates using Cert Manager, ngrok,
+# and Let's Encrypt
+# - ingress-edge-server-ngrok.yml

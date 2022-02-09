@@ -11,6 +11,9 @@ minikube addons enable ingress
 
 eval $(minikube docker-env)
 
+# First deploy the resource managers and wait for their pods to become ready
+docker-compose up -d mongodb mysql rabbitmq
+
 ./gradlew build && docker-compose build
 
 kubectl create namespace hands-on
@@ -61,16 +64,16 @@ kubectl create secret generic mysql-credentials \
     --from-literal=SPRING_DATASOURCE_PASSWORD=mysql-pwd-dev \
     --save-config
 
-kubectl create secret tls tls-certificate --key kubernetes/cert/tls.key --cert kubernetes/cert/tls.crt
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.7.1/cert-manager.yaml
+kubectl wait --timeout=600s --for=condition=ready pod --all -n cert-manager
 
-# First deploy the resource managers and wait for their pods to become ready
-kubectl apply -f kubernetes/services/overlays/dev/rabbitmq-dev.yml
-kubectl apply -f kubernetes/services/overlays/dev/mongodb-dev.yml
-kubectl apply -f kubernetes/services/overlays/dev/mysql-dev.yml
-kubectl wait --timeout=600s --for=condition=ready pod --all
+kubectl apply -f kubernetes/services/base/letsencrypt-issuer-staging.yml
+kubectl apply -f kubernetes/services/base/letsencrypt-issuer-prod.yml
 
 # Next deploy the microservices and wait for their pods to become ready
 kubectl apply -k kubernetes/services/overlays/dev
 kubectl wait --timeout=600s --for=condition=ready pod --all
+
+kubectl apply -f kubernetes/services/base/ingress-edge-server-ngrok.yml
 
 # set +ex
